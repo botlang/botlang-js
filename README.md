@@ -1,15 +1,16 @@
-[![Build Status](https://api.travis-ci.org/botlang/botlang-js.svg?branch=master)](https://travis-ci.org/botlang/botlang-js)
+[![Build Status Master](https://api.travis-ci.org/botlang/botlang-js.svg?branch=master)](https://travis-ci.org/botlang/botlang-js)
+[![Source code documentation coverage](https://doc.esdoc.org/github.com/botlang/botlang-js/badge.svg)](https://doc.esdoc.org/github.com/botlang/botlang-js/)
 
 # Botlang JS
 
 Botlang implementation for JavaScript
+
 
 ## Source code documentation
 
 The project uses [ESDoc](https://esdoc.org/) for generating source code documentation. Consult the project website for related questions and use appropriate tags in the code. The standard output directory for local development is `doc/`. The build process can be triggered via the cli `npm run make:doc`.
 
 The online source code documentation can be found [here](https://doc.esdoc.org/github.com/botlang/botlang-js/).
-
 ### Update online documentation
 
 ```sh

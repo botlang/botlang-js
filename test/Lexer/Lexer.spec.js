@@ -2,7 +2,8 @@
 
 import { assert } from 'chai';
 import { Input, Lexer } from '../../src/Lexer';
-import { ResponseToken, TriggerToken, VariableToken } from '../../src/Lexer/Token';
+import reservedKeywords from '../../lang/ReservedKeywords.json';
+import Token from '../../src/Lexer/Token';
 import pkg from '../../package.json';
 
 /** @test {Lexer} */
@@ -20,35 +21,108 @@ describe(`${pkg.name}/Lexer/Lexer`, () => {
 
   /** @test {Lexer#next} */
   describe('#next', () => {
-    it('Return ResponseToken', () => {
-      const input = new Input('- hello human'),
-            token = new Lexer(input).next();
-
-      assert.instanceOf(token, ResponseToken);
-      assert.strictEqual(token.getValue(), ' hello human');
-    });
-
-    it('Return TriggerToken', () => {
-      const input = new Input('+ hello botlang'),
-            token = new Lexer(input).next();
-
-      assert.instanceOf(token, TriggerToken);
-      assert.strictEqual(token.getValue(), ' hello botlang');
-    });
-
-    it('Return VariableToken', () => {
-      const input = new Input('$variable = 1'),
-            token = new Lexer(input).next();
-
-      assert.instanceOf(token, VariableToken);
-      assert.strictEqual(token.getValue(), '1');
-    });
-
-    it('Skip comment', () => {
-      const input = new Input('// An example comment'),
+    it('Ignore comments', () => {
+      const input = new Input('# A comment'),
             token = new Lexer(input).next();
 
       assert.isNull(token);
+    });
+
+    it('Return string token', () => {
+      const input = new Input('"Hello World"'),
+            token = new Lexer(input).next();
+
+      assert.instanceOf(token, Token);
+      assert.strictEqual(token.getType(), 'string');
+      assert.strictEqual(token.getValue(), 'Hello World');
+    });
+
+    it('Return number token', () => {
+      const tests = [
+        1, 1.2, 1234567890, 1234567.890
+      ];
+
+      tests.forEach((test) => {
+        const input = new Input(test),
+              token = new Lexer(input).next();
+
+        assert.instanceOf(token, Token);
+        assert.strictEqual(token.getType(), 'number');
+        assert.strictEqual(token.getValue(), test);
+      });
+    });
+
+    it('Return operation token', () => {
+      const tests = [
+        '+',
+        '-',
+        '*',
+        '/',
+        '%',
+        '=',
+        '&',
+        '|',
+        '<',
+        '>',
+        '!'
+      ];
+
+      tests.forEach((test) => {
+        const input = new Input(test),
+              token = new Lexer(input).next();
+
+        assert.instanceOf(token, Token);
+        assert.strictEqual(token.getType(), 'operation');
+        assert.strictEqual(token.getValue(), test);
+      });
+    });
+
+    it('Return punctuation token', () => {
+      const tests = [
+        ',',
+        ';',
+        '(',
+        ')',
+        '{',
+        '}',
+        '[',
+        ']'
+      ];
+
+      tests.forEach((test) => {
+        const input = new Input(test),
+              token = new Lexer(input).next();
+
+        assert.instanceOf(token, Token);
+        assert.strictEqual(token.getType(), 'punctuation');
+        assert.strictEqual(token.getValue(), test);
+      });
+    });
+
+    it('Return identifier token', () => {
+      const tests = [
+        'functionName'
+      ];
+
+      tests.forEach((test) => {
+        const input = new Input(test),
+              token = new Lexer(input).next();
+
+        assert.instanceOf(token, Token);
+        assert.strictEqual(token.getType(), 'identifier');
+        assert.strictEqual(token.getValue(), test);
+      });
+    });
+
+    it('Return keyword token', () => {
+      reservedKeywords.forEach((test) => {
+        const input = new Input(test),
+              token = new Lexer(input).next();
+
+        assert.instanceOf(token, Token);
+        assert.strictEqual(token.getType(), 'keyword');
+        assert.strictEqual(token.getValue(), test);
+      });
     });
 
     it('Throw invalid character error', () => {

@@ -1,11 +1,38 @@
-import ResponseToken from './Token/ResponseToken';
-import Token from './Token/Token';
-import TriggerToken from './Token/TriggerToken';
-import VariableToken from './Token/VariableToken';
+class Token {
+  /**
+   * Create a Token.
+   * @param {String} type
+   * @param {*} value
+   */
+  constructor(type, value) {
+    /**
+     * @private
+     * @type {String}
+     */
+    this.type = type;
 
-export {
-  ResponseToken,
-  Token,
-  TriggerToken,
-  VariableToken
-};
+    /**
+     * @private
+     * @type {*}
+     */
+    this.value = value;
+  }
+
+  /**
+   * Return the token type
+   * @return {String}
+   */
+  getType() {
+    return this.type;
+  }
+
+  /**
+   * Return the token value
+   * @return {*}
+   */
+  getValue() {
+    return this.value;
+  }
+}
+
+export default Token;

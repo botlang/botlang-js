@@ -2,12 +2,13 @@
 
 import Input from './Input';
 import reservedKeywords from '../../lang/ReservedKeywords.json';
-import { ResponseToken, TriggerToken, VariableToken } from './Token';
+import Token from './Token';
 
 export default class Lexer {
   /**
    * Create a Lexer.
    * @param {Input} input
+   * @throws {TypeError}
    */
   constructor(input) {
     if (!(input instanceof Input)) {
@@ -25,16 +26,59 @@ export default class Lexer {
      * @type {Input}
      */
     this.input = input;
-
-    /**
-     * @private
-     * @type {Array}
-     */
-    this.keywords = reservedKeywords;
   }
 
   /**
    * @private
+   * @param {String} char
+   */
+  static isDigit(char) {
+    return /[0-9]/.test(char);
+  }
+
+  /**
+   * @private
+   * @param {String} char
+   */
+  static isIdentifier(char) {
+    return Lexer.isIdentifierStart(char) || /[a-zA-Z_]/.test(char);
+  }
+
+  /**
+   * @private
+   * @param {String} char
+   */
+  static isIdentifierStart(char) {
+    return /[a-zA-Z]/.test(char);
+  }
+
+  /**
+   * @private
+   * @param {String} char
+   */
+  static isOperation(char) {
+    return -1 !== '+-*/%=&|<>!'.indexOf(char);
+  }
+
+  /**
+   * @private
+   * @param {String} char
+   */
+  static isPunctuation(char) {
+    return -1 !== ',;(){}[]'.indexOf(char);
+  }
+
+  /**
+   * @private
+   * @param {String} char
+   */
+  static isReservedKeyword(char) {
+    return -1 !== reservedKeywords.indexOf(char);
+  }
+
+  /**
+   * @private
+   * @param {String} char
    */
   static isWhitespace(char) {
     return /\s/.test(char);
@@ -64,29 +108,38 @@ export default class Lexer {
     }
 
     // Get the current character
-    let char = this.input.peek();
+    const char = this.input.peek();
 
-    // Read trigger
-    if ('+' === char) {
-      return this.readTrigger();
+    // Ignore comments
+    if ('#' === char) {
+      this.skipComment();
+
+      return this.nextToken();
     }
 
-    // Read response
-    if ('-' === char) {
-      return this.readResponse();
+    // Read string
+    if ('"' === char) {
+      return this.readString();
     }
 
-    if ('/' === char) {
-      char = this.input.next();
-
-      if ('/' === char) {
-        this.skipComment();
-        return this.nextToken();
-      }
+    // Read number
+    if (Lexer.isDigit(char)) {
+      return this.readNumber();
     }
 
-    if ('$' === char) {
-      return this.readVariable();
+    // Read identifier
+    if (Lexer.isIdentifierStart(char)) {
+      return this.readIdentifier();
+    }
+
+    // Read operation
+    if (Lexer.isOperation(char)) {
+      return this.readOperation();
+    }
+
+    // Read punctuation
+    if (Lexer.isPunctuation(char)) {
+      return this.readPunctuation();
     }
 
     return this.input.error('Invalid character');
@@ -119,29 +172,63 @@ export default class Lexer {
 
   /**
    * @private
-   * @return {ResponseToken}
+   * @return {Token}
    */
-  readResponse() {
-    return new ResponseToken(this.readEscaped());
+  readIdentifier() {
+    const identifier = this.input.peek().concat(this.readWhile(char => Lexer.isIdentifier(char)));
+
+    return new Token(
+      Lexer.isReservedKeyword(identifier) ? 'keyword' : 'identifier',
+      identifier
+    );
   }
 
   /**
    * @private
-   * @return {TriggerToken}
+   * @return {Token}
    */
-  readTrigger() {
-    return new TriggerToken(this.readEscaped());
+  readNumber() {
+    let isDecimal = false;
+
+    const number = this.input.peek().concat(this.readWhile((char) => {
+      if ('.' === char) {
+        if (isDecimal) {
+          return false;
+        }
+        isDecimal = true;
+        return true;
+      }
+      return Lexer.isDigit(char);
+    }));
+
+    return new Token('number', parseFloat(number));
   }
 
   /**
    * @private
-   * @return {VariableToken}
+   * @return {Token}
    */
-  readVariable() {
-    const name = this.readEscaped(' '),
-          value = this.readEscaped().replace(/=\s/, '');
+  readOperation() {
+    return new Token(
+      'operation',
+      this.input.peek().concat(this.readWhile(char => Lexer.isOperation(char)))
+    );
+  }
 
-    return new VariableToken(name, value);
+  /**
+   * @private
+   * @return {Token}
+   */
+  readPunctuation() {
+    return new Token('punctuation', this.input.peek());
+  }
+
+  /**
+   * @private
+   * @return {Token}
+   */
+  readString() {
+    return new Token('string', this.readEscaped('"'));
   }
 
   /**
@@ -163,7 +250,7 @@ export default class Lexer {
    * @private
    */
   skipComment() {
-    this.readWhile(() => true);
+    this.readWhile(char => '\n' !== char);
 
     this.input.next();
   }

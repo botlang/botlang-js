@@ -1,5 +1,3 @@
 import Parser from './Parser';
 
-export {
-  Parser
-};
+export default Parser;

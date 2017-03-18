@@ -1,6 +1,9 @@
 'use strict';
 
-export default class Parser {
+/**
+ * The botlang parser
+ */
+class Parser {
   /**
    * Create a Parser.
    * @param {Token[]} token
@@ -17,3 +20,5 @@ export default class Parser {
     this.token = token;
   }
 }
+
+export default Parser;

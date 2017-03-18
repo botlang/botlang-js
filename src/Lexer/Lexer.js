@@ -4,7 +4,11 @@ import Input from './Input';
 import reservedKeywords from '../../lang/ReservedKeywords.json';
 import Token from './Token';
 
-export default class Lexer {
+/**
+ * The botlang lexer takes an instance of `Input` as a constructor argument and produces
+ * a token stream for further processing in the parser.
+ */
+class Lexer {
   /**
    * Create a Lexer.
    * @param {Input} input
@@ -255,3 +259,5 @@ export default class Lexer {
     this.input.next();
   }
 }
+
+export default Lexer;

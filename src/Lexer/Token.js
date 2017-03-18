@@ -1,3 +1,6 @@
+/**
+ * Lexer token representation.
+ */
 class Token {
   /**
    * Create a Token.

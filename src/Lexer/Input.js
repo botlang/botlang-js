@@ -1,6 +1,11 @@
 'use strict';
 
-export default class Input {
+/**
+ * Representation of the input stream with some util functions. The class is used by the botlang
+ * lexer which takes an instance of `Input` as a constructor argument and converts it into a
+ * token stream.
+ */
+class Input {
   /**
    * Create an Input.
    * @param {String} input
@@ -71,3 +76,5 @@ export default class Input {
     return this.input.charAt(this.position);
   }
 }
+
+export default Input;

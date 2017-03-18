@@ -1,0 +1,11 @@
+# Dependency directories
+node_modules
+
+# HTML class documentation
+doc
+
+# Compiled lib
+lib
+
+# Logs
+npm-debug.log

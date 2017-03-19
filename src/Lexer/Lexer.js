@@ -84,6 +84,14 @@ class Lexer {
    * @private
    * @param {String} char
    */
+  static isString(char) {
+    return '"' === char;
+  }
+
+  /**
+   * @private
+   * @param {String} char
+   */
   static isWhitespace(char) {
     return /\s/.test(char);
   }
@@ -117,12 +125,11 @@ class Lexer {
     // Ignore comments
     if ('#' === char) {
       this.skipComment();
-
       return this.nextToken();
     }
 
     // Read string
-    if ('"' === char) {
+    if (Lexer.isString(char)) {
       return this.readString();
     }
 
@@ -150,6 +157,16 @@ class Lexer {
   }
 
   /**
+   * Return the current token.
+   * @return {Token}
+   */
+  peek() {
+    // Return the current token or get the first token
+    // if `next` has not been called yet.
+    return this.currentToken || this.next();
+  }
+
+  /**
    * @private
    */
   readEscaped(end) {
@@ -165,6 +182,7 @@ class Lexer {
       } else if ('\\' === char) {
         escaped = true;
       } else if (char === end) {
+        this.input.next();
         break;
       } else {
         str += char;
@@ -179,7 +197,9 @@ class Lexer {
    * @return {Token}
    */
   readIdentifier() {
-    const identifier = this.input.peek().concat(this.readWhile(char => Lexer.isIdentifier(char)));
+    const identifier = this.input.peek().concat(
+      this.readWhile(char => Lexer.isIdentifier(char))
+    ).trim();
 
     return new Token(
       Lexer.isReservedKeyword(identifier) ? 'keyword' : 'identifier',
@@ -203,9 +223,9 @@ class Lexer {
         return true;
       }
       return Lexer.isDigit(char);
-    }));
+    })).trim();
 
-    return new Token('number', parseFloat(number));
+    return new Token('numeric', parseFloat(number));
   }
 
   /**
@@ -215,7 +235,7 @@ class Lexer {
   readOperation() {
     return new Token(
       'operation',
-      this.input.peek().concat(this.readWhile(char => Lexer.isOperation(char)))
+      this.input.peek().concat(this.readWhile(char => Lexer.isOperation(char))).trim()
     );
   }
 
@@ -224,7 +244,7 @@ class Lexer {
    * @return {Token}
    */
   readPunctuation() {
-    return new Token('punctuation', this.input.peek());
+    return new Token('punctuator', this.input.peek());
   }
 
   /**

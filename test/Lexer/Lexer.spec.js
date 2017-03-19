@@ -1,9 +1,8 @@
 'use strict';
 
 import { assert } from 'chai';
-import { Input, Lexer } from '../../src/Lexer';
+import { Input, InputError, Lexer, Token } from '../../src/Lexer';
 import reservedKeywords from '../../lang/ReservedKeywords.json';
-import Token from '../../src/Lexer/Token';
 import pkg from '../../package.json';
 
 /** @test {Lexer} */
@@ -37,7 +36,7 @@ describe(`${pkg.name}/Lexer/Lexer`, () => {
       assert.strictEqual(token.getValue(), 'Hello World');
     });
 
-    it('Return number token', () => {
+    it('Return numeric token', () => {
       const tests = [
         1, 1.2, 1234567890, 1234567.890
       ];
@@ -47,7 +46,7 @@ describe(`${pkg.name}/Lexer/Lexer`, () => {
               token = new Lexer(input).next();
 
         assert.instanceOf(token, Token);
-        assert.strictEqual(token.getType(), 'number');
+        assert.strictEqual(token.getType(), 'numeric');
         assert.strictEqual(token.getValue(), test);
       });
     });
@@ -77,7 +76,7 @@ describe(`${pkg.name}/Lexer/Lexer`, () => {
       });
     });
 
-    it('Return punctuation token', () => {
+    it('Return punctuator token', () => {
       const tests = [
         ',',
         ';',
@@ -94,7 +93,7 @@ describe(`${pkg.name}/Lexer/Lexer`, () => {
               token = new Lexer(input).next();
 
         assert.instanceOf(token, Token);
-        assert.strictEqual(token.getType(), 'punctuation');
+        assert.strictEqual(token.getType(), 'punctuator');
         assert.strictEqual(token.getValue(), test);
       });
     });
@@ -129,9 +128,19 @@ describe(`${pkg.name}/Lexer/Lexer`, () => {
       const input = new Input('~'),
             lexer = new Lexer(input);
 
-      assert.throws(() => {
-        lexer.next('Parse error');
-      }, Error, 'Invalid character (Line: 1, Column: 0)');
+      assert.throws(() => lexer.next(), Error, 'Invalid character (Line: 1, Column: 0)');
+    });
+  });
+
+  /** @test {Lexer#peek} */
+  describe('#peek', () => {
+    it('Return the current token.', () => {
+      const input = new Input('"hello botlang"'),
+            lexer = new Lexer(input);
+
+      assert.instanceOf(
+        lexer.peek(), Token
+      );
     });
   });
 });

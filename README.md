@@ -1,5 +1,6 @@
 [![Build Status Master](https://api.travis-ci.org/botlang/botlang-js.svg?branch=master)](https://travis-ci.org/botlang/botlang-js)
 [![Source code documentation coverage](https://doc.esdoc.org/github.com/botlang/botlang-js/badge.svg)](https://doc.esdoc.org/github.com/botlang/botlang-js/)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/botlang/botlang-js/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/botlang/botlang-js/?branch=master)
 
 # Botlang JS
 

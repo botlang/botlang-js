@@ -1,7 +1,7 @@
 'use strict';
 
 import { assert } from 'chai';
-import { Input, InputError, Lexer, Token } from '../../src/Lexer';
+import { Input, Lexer, Token } from '../../src/Lexer';
 import reservedKeywords from '../../lang/ReservedKeywords.json';
 import pkg from '../../package.json';
 

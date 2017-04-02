@@ -33,6 +33,24 @@ class Lexer {
   }
 
   /**
+   * Determine whether or not the lexer has reached the input's eof
+   * @return {Boolean}
+   */
+  eof() {
+    return this.input.eof();
+  }
+
+  /**
+   * Throw a new Error.
+   * @param  {String} message
+   * @throws {Error}
+   * @return {void}
+   */
+  inputError(message) {
+    this.input.error(message);
+  }
+
+  /**
    * @private
    * @param {String} char
    */
@@ -153,7 +171,7 @@ class Lexer {
       return this.readPunctuation();
     }
 
-    return this.input.error('Invalid character');
+    return this.inputError('Invalid character');
   }
 
   /**

@@ -9,10 +9,7 @@
         "url": "https://www.matchilling.com"
     },
     "homepage": "https://botlang.org",
-    "licenses": [{
-        "type": "GPL-3.0",
-        "url": "https://github.com/botlang/botlang-js/blob/master/LICENSE"
-    }],
+    "license": "GPL-3.0",
     "scripts": {
         "compile": "./node_modules/.bin/babel --out-dir lib/ src/",
         "dev": "./node_modules/.bin/mocha --compilers js:babel-core/register --recursive --watch test/",
@@ -36,7 +33,7 @@
         "chai": "^3.5.0",
         "esdoc": "^0.5.2",
         "eslint": "^3.17.0",
-        "eslint-config-matchilling": "^2.0.0",
+        "eslint-config-matchilling": "^2.1.0",
         "eslint-plugin-import": "^2.2.0",
         "mocha": "^3.2.0"
     },

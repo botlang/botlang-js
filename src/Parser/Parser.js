@@ -27,6 +27,40 @@ class Parser {
      * @type {Array}
      */
     this.syntaxTree = [];
+
+    /**
+     * @private
+     * @type {Integer}
+     */
+    this.syntaxTreeIndex = 0;
+  }
+
+  /**
+   * @private
+   * @return {Object|null}
+   */
+  getLastNode() {
+    return 'undefined' !== typeof this.syntaxTree[this.syntaxTreeIndex - 1]
+      ? this.syntaxTree[this.syntaxTreeIndex - 1]
+      : null;
+  }
+
+  /**
+   * @private
+   * @param  {Token} token
+   * @return {Boolean}
+   */
+  static isResponse(token) {
+    return token instanceof Token && 'operation' === token.getType() && '-' === token.getValue();
+  }
+
+  /**
+   * @private
+   * @param  {Token} token
+   * @return {Boolean}
+   */
+  static isTrigger(token) {
+    return token instanceof Token && 'operation' === token.getType() && '+' === token.getValue();
   }
 
   /**
@@ -34,18 +68,68 @@ class Parser {
    * @return {Object}
    */
   parse() {
-    let token = this.lexer.next();
+    while (!this.lexer.eof()) {
+      const token = this.lexer.next();
+      if (!(token instanceof Token)) {
+        continue;
+      }
 
-    while (token instanceof Token) {
-      // Pop next token from stream
-      token = this.lexer.next();
+      if (Parser.isTrigger(token)) {
+        this.pushNodeToSyntaxTree(this.parseTrigger());
+      }
+
+      if (Parser.isResponse(token) && 'trigger' === this.getLastNode().type) {
+        this.getLastNode().responses.push(this.parseResponse());
+      }
     }
 
     return {
-      type       : 'program',
-      sourceType : 'script',
-      body       : this.syntaxTree
+      type : 'program',
+      body : this.syntaxTree
     };
+  }
+
+  /**
+   * @private
+   * @return {Object}
+   */
+  parseTrigger() {
+    const trigger = this.lexer.next();
+    if ('string' !== trigger.getType()) {
+      return this.lexer.inputError('Expected trigger pattern after trigger identifier.');
+    }
+
+    return {
+      type      : 'trigger',
+      pattern   : trigger.getValue(),
+      responses : []
+    };
+  }
+
+  /**
+   * @private
+   * @return {Object}
+   */
+  parseResponse() {
+    const response = this.lexer.next();
+    if ('string' !== response.getType()) {
+      this.lexer.inputError('Expected string after response identifier.');
+    }
+
+    return {
+      type  : 'response',
+      value : response.getValue()
+    };
+  }
+
+  /**
+   * @private
+   * @param  {Object} node
+   * @return {void}
+   */
+  pushNodeToSyntaxTree(node) {
+    this.syntaxTreeIndex += 1;
+    this.syntaxTree.push(node);
   }
 }
 

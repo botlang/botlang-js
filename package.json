@@ -23,7 +23,7 @@
     },
     "main": "./lib/Botlang.js",
     "bin": {
-        "botlang": "./lib/Cli"
+        "botlang": "./bin/cli"
     },
     "engines": {
         "node": ">=4.3.2"
@@ -44,7 +44,7 @@
         "dev": "./node_modules/.bin/mocha --compilers js:babel-core/register --recursive --watch test/",
         "docs:make": "./node_modules/.bin/esdoc -c .esdoc.json",
         "eslint": "./node_modules/.bin/eslint src/",
-        "start": "node ./lib/Cli ./example/eliza.bot",
+        "start": "node ./lib/Cli/index.js ./example/eliza.bot",
         "test": "npm run eslint && ./node_modules/.bin/mocha --compilers js:babel-core/register --recursive test/"
     },
     "eslintConfig": {

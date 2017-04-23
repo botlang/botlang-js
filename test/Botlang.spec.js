@@ -41,4 +41,11 @@ describe(`${pkg.name}/Botlang`, () => {
       assert.match(botlang.reply('Yay ...'), /Sorry, I do not know the answer to that question./);
     });
   });
+
+  /** @test {Botlang#version} */
+  describe('#version', () => {
+    it('Should return the current version', () => {
+      assert.equal(Botlang.version(), pkg.version);
+    });
+  });
 });

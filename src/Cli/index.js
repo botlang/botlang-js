@@ -4,7 +4,6 @@ import * as fs from 'fs';
 import * as readline from 'readline';
 
 import Botlang from '../Botlang';
-import pkg from '../../package.json';
 import Styles from './Styles';
 
 const options = new Map()
@@ -33,7 +32,7 @@ const options = new Map()
       };
 
 write(`\n${Styles.yellow.open}`);
-write(`🤖 Welcome to botlang#${pkg.version}\n`);
+write(`🤖 Welcome to botlang#${Botlang.version()}\n`);
 write(`   Brain from "${options.get('path')}" loaded\n`);
 write(`${Styles.yellow.close}\n`);
 
@@ -43,11 +42,9 @@ rl.prompt();
 rl.on('line', (line) => {
   const input = line.trim();
 
-  if (/\\help/.test(input)) {
-    writeSys('Not implemented yet. Read the source code in the meantime ...\n');
-  } else {
-    writeBot(`${bot.reply(input)}\n`);
-  }
+  if (/\\help/.test(input)) writeSys('Not implemented yet. Read the source code in the meantime ...\n');
+  else if (/\\version/.test(input)) writeSys(`${Botlang.version()}\n`);
+  else writeBot(`${bot.reply(input)}\n`);
 
   rl.prompt();
 });

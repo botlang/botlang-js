@@ -40,7 +40,7 @@
         "mocha": "^3.2.0"
     },
     "scripts": {
-        "compile": "./node_modules/.bin/babel --out-dir lib/ src/",
+        "compile": "./node_modules/.bin/babel --minified --no-comments --out-dir lib/ src/",
         "dev": "./node_modules/.bin/mocha --compilers js:babel-core/register --recursive --watch test/",
         "docs:make": "./node_modules/.bin/esdoc -c .esdoc.json",
         "eslint": "./node_modules/.bin/eslint src/",

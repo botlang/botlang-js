@@ -2,6 +2,7 @@
 
 import { Input, Lexer } from './Lexer';
 import Parser from './Parser';
+import pkg from '../package.json';
 
 /**
  * Botlnag interpreter.
@@ -55,6 +56,14 @@ class Botlang {
    */
   reply(message) {
     return this.match(message);
+  }
+
+  /**
+   * Return the current version
+   * @return {String}
+   */
+  static version() {
+    return pkg.version;
   }
 }
 

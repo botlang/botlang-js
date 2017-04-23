@@ -11,7 +11,7 @@ describe(`${pkg.name}/Botlang`, () => {
   /** @test {Botlang#constructor} */
   describe('#constructor', () => {
     it('Create a new instance of type Botlang', () => {
-      const sourceCode = fs.readFileSync(path.join(__dirname, '..', 'example', 'hello_world.bot'), {
+      const sourceCode = fs.readFileSync(path.join(__dirname, 'Data', 'hello_world.bot'), {
               encoding : 'utf8',
               flag     : 'r'
             }),
@@ -23,7 +23,7 @@ describe(`${pkg.name}/Botlang`, () => {
 
   /** @test {Botlang#reply} */
   describe('#reply', () => {
-    const sourceCode = fs.readFileSync(path.join(__dirname, '..', 'example', 'hello_world.bot'), {
+    const sourceCode = fs.readFileSync(path.join(__dirname, 'Data', 'hello_world.bot'), {
             encoding : 'utf8',
             flag     : 'r'
           }),

@@ -29,6 +29,10 @@ describe(`${pkg.name}/Botlang`, () => {
           }),
           botlang = new Botlang(sourceCode);
 
+    it('Should return an empty string', () => {
+      assert.match(botlang.reply(''), /^$/);
+    });
+
     it('Should return "Hi, how is it going?"', () => {
       assert.match(botlang.reply('Hey'), /Hi, how is it going?/);
     });

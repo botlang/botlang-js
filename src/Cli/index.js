@@ -42,7 +42,8 @@ rl.prompt();
 rl.on('line', (line) => {
   const input = line.trim();
 
-  if (/\\help/.test(input)) writeSys('Not implemented yet. Read the source code in the meantime ...\n');
+  if ('' === input) write();
+  else if (/\\help/.test(input)) writeSys('Not implemented yet. Read the source code in the meantime ...\n');
   else if (/\\version/.test(input)) writeSys(`${Botlang.version()}\n`);
   else writeBot(`${bot.reply(input)}\n`);
 

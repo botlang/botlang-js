@@ -55,6 +55,7 @@ class Botlang {
    * @return {String}
    */
   reply(message) {
+    if ('' === message) return '';
     return this.match(message);
   }
 

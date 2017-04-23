@@ -1,21 +1,72 @@
 {
-    "type": "program",
-    "body": [{
-        "type": "trigger",
-        "pattern": "Hello there",
-        "responses": [{
-            "type": "response",
-            "value": "Hi, how are you?"
-        }, {
-            "type": "response",
-            "value": "Hey, how are you?"
-        }]
+  "type": "program",
+  "body": [{
+    "type": "trigger",
+    "src": "Hello there",
+    "pattern": "Hello there",
+    "responses": [{
+      "type": "response",
+      "value": "Hi, how are you?"
     }, {
-        "type": "trigger",
-        "pattern": "(\\w?)Hey",
-        "responses": [{
-            "type": "response",
-            "value": "Hi, how is it going?"
-        }]
+      "type": "response",
+      "value": "Hey, how are you?"
     }]
+  }, {
+    "type": "trigger",
+    "src": "* Hey",
+    "pattern": "(\\w?)Hey",
+    "responses": [{
+      "type": "response",
+      "value": "Hi, how is it going?"
+    }]
+  }, {
+    "type": "trigger",
+    "src": "* think about $",
+    "pattern": "(\\w?)think about\\s?(\\w+?)\\s?",
+    "responses": [{
+      "type": "response",
+      "value": "I think $ is great!"
+    }, {
+      "type": "response",
+      "value": "I think $ is the coolest thing on Earth!"
+    }]
+  }, {
+    "type": "trigger",
+    "src": "* think about $?",
+    "pattern": "(\\w?)think about\\s?(\\w+?)\\s??",
+    "responses": [{
+      "type": "response",
+      "value": "I think $ is freakin awesome!"
+    }, {
+      "type": "response",
+      "value": "I think $ is great!"
+    }, {
+      "type": "response",
+      "value": "I think $ is the coolest thing on Earth!"
+    }]
+  }, {
+    "type": "trigger",
+    "src": "I $ you",
+    "pattern": "I\\s?(\\w+?)\\s?you",
+    "responses": [{
+      "type": "response",
+      "value": "I $ you too."
+    }]
+  }, {
+    "type": "trigger",
+    "src": "(I'm|I am|Im) $",
+    "pattern": "(I'm|I am|Im)\\s?(\\w+?)\\s?",
+    "responses": [{
+      "type": "response",
+      "value": "Glad to hear that you are $."
+    }]
+  }, {
+    "type": "trigger",
+    "src": "* I forget $",
+    "pattern": "(\\w?)I forget\\s?(\\w+?)\\s?",
+    "responses": [{
+      "type": "response",
+      "value": "Can you think of why you might forget $?"
+    }]
+  }]
 }

@@ -1,8 +1,29 @@
 # OMG, a hello world example
 
+# Multiple answers
 + "Hello there"
 - "Hi, how are you?"
 - "Hey, how are you?"
 
+# Wildcard match
 + "* Hey"
 - "Hi, how is it going?"
+
++ "* think about $"
+- "I think $ is great!"
+- "I think $ is the coolest thing on Earth!"
+
+# String substitution example
++ "* think about $?"
+- "I think $ is freakin awesome!"
+- "I think $ is great!"
+- "I think $ is the coolest thing on Earth!"
+
++ "I $ you"
+- "I $ you too."
+
++ "(I'm|I am|Im) $"
+- "Glad to hear that you are $."
+
++ "* I forget $"
+- "Can you think of why you might forget $?"

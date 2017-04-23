@@ -33,7 +33,24 @@ class Botlang {
   static evalTriggerNode(trigger, node) {
     if (0 === node.responses.length) return null;
 
-    return node.responses[Math.floor(Math.random() * node.responses.length)].value;
+    let reply = node.responses[Math.floor(Math.random() * node.responses.length)].value;
+
+    // Do string substitution
+    const pos = reply.indexOf('$');
+    if (-1 < pos) {
+      const pattern = node.src.replace(/\*/, '(\\w+)').replace(/\$/, '(\\w+)'),
+            match = new RegExp(pattern, 'i').exec(trigger);
+
+      if (Array.isArray(match)) {
+        const substitution = undefined !== match[2]
+          ? match[2]
+          : match[1];
+
+        reply = `${reply.substring(0, pos)}${substitution}${reply.substring(pos + 1)}`;
+      }
+    }
+
+    return reply;
   }
 
   /**

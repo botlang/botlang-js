@@ -37,4 +37,18 @@ describe(`${pkg.name}/Parser/Parser`, () => {
       assert.deepEqual(code, helloWorldAst);
     });
   });
+
+  /** @test {Parser#replaceStringSubstitution} */
+  describe('#replaceStringSubstitution', () => {
+    it('Should replace the string substitution character in a given string', () => {
+      assert.notInclude(Parser.replaceStringSubstitution('I $ you because you are so $!'), '$');
+    });
+  });
+
+  /** @test {Parser#replaceWildcard} */
+  describe('#replaceWildcard', () => {
+    it('Should replace the wildcard substitution character in a given string', () => {
+      assert.notInclude(Parser.replaceWildcard('What do you think about * and *?'), '*');
+    });
+  });
 });

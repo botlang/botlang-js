@@ -94,16 +94,19 @@ class Parser {
    * @return {Object}
    */
   parseTrigger() {
-    const trigger = this.lexer.next(),
-          // Replace wildcard characters
-          pattern = trigger.getValue().replace(/(\s?)\*(\s?)/g, '(\\w?)');
+    const trigger = this.lexer.next();
+    let pattern = '';
 
     if ('string' !== trigger.getType()) {
       return this.lexer.inputError('Expected trigger pattern after trigger identifier.');
     }
 
+    pattern = Parser.replaceWildcard(trigger.getValue());
+    pattern = Parser.replaceStringSubstitution(pattern);
+
     return {
       type      : 'trigger',
+      src       : trigger.getValue(),
       pattern,
       responses : []
     };
@@ -133,6 +136,24 @@ class Parser {
   pushNodeToSyntaxTree(node) {
     this.syntaxTreeIndex += 1;
     this.syntaxTree.push(node);
+  }
+
+  /**
+   * Replace string substitution [$] character
+   * @param  {String} string
+   * @return {String}
+   */
+  static replaceStringSubstitution(string) {
+    return string.replace(/(\s?)\$(\s?)/g, '\\s?(\\w+?)\\s?');
+  }
+
+  /**
+   * Replace wildcard [*] character
+   * @param  {String} string
+   * @return {String}
+   */
+  static replaceWildcard(string) {
+    return string.replace(/(\s?)\*(\s?)/g, '(\\w?)');
   }
 }
 

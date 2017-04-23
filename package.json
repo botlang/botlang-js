@@ -23,7 +23,7 @@
     },
     "main": "./lib/Botlang.js",
     "bin": {
-        "botlang": "./lib/cli.js"
+        "botlang": "./lib/Cli"
     },
     "engines": {
         "node": ">=4.3.2"

@@ -12,7 +12,7 @@
         }]
     }, {
         "type": "trigger",
-        "pattern": "Hey",
+        "pattern": "(\\w?)Hey",
         "responses": [{
             "type": "response",
             "value": "Hi, how is it going?"

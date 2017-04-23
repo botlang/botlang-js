@@ -44,6 +44,7 @@
         "dev": "./node_modules/.bin/mocha --compilers js:babel-core/register --recursive --watch test/",
         "docs:make": "./node_modules/.bin/esdoc -c .esdoc.json",
         "eslint": "./node_modules/.bin/eslint src/",
+        "start": "node ./lib/Cli ./example/eliza.bot",
         "test": "./node_modules/.bin/mocha --compilers js:babel-core/register --recursive test/"
     },
     "eslintConfig": {

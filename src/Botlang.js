@@ -43,7 +43,7 @@ class Botlang {
     let res = null;
 
     this.program.body.forEach((el) => {
-      if ('trigger' === el.type && new RegExp(el.pattern).test(message)) res = Botlang.evalTriggerNode(message, el);
+      if ('trigger' === el.type && new RegExp(el.pattern, 'i').test(message)) res = Botlang.evalTriggerNode(message, el);
     });
 
     return res || 'Sorry, I do not know the answer to that question.';

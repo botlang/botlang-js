@@ -94,14 +94,17 @@ class Parser {
    * @return {Object}
    */
   parseTrigger() {
-    const trigger = this.lexer.next();
+    const trigger = this.lexer.next(),
+          // Replace wildcard characters
+          pattern = trigger.getValue().replace(/(\s?)\*(\s?)/g, '(\\w?)');
+
     if ('string' !== trigger.getType()) {
       return this.lexer.inputError('Expected trigger pattern after trigger identifier.');
     }
 
     return {
       type      : 'trigger',
-      pattern   : trigger.getValue(),
+      pattern,
       responses : []
     };
   }

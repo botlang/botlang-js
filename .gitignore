@@ -9,3 +9,7 @@ lib
 
 # Logs
 npm-debug.log
+
+# Istanbul coverage
+.nyc_output
+coverage/

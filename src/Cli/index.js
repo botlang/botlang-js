@@ -33,7 +33,7 @@ const options = new Map()
 
 write(`\n${Styles.yellow.open}`);
 write(`🤖 Welcome to botlang#${Botlang.version()}\n`);
-write(`   Brain from "${options.get('path')}" loaded\n`);
+write(`  Brain from "${options.get('path')}" loaded\n`);
 write(`${Styles.yellow.close}\n`);
 
 rl.setPrompt(`${Styles.green.open}[${options.get('username')}]:${Styles.green.close} `);

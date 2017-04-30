@@ -6,9 +6,19 @@ import * as readline from 'readline';
 import Botlang from '../Botlang';
 import Styles from './Styles';
 
+if ('undefined' === typeof process.argv[2]) {
+  process.stdout.write(`${Styles.red.open}No botscript has been defined.${Styles.red.close}\n`);
+  process.stdout.write(`${Styles.red.open}Usage: "/botlang <path-to-your-botlang-script>"${Styles.red.close}\n`);
+  process.exit(1);
+} else if (!fs.existsSync(process.argv[2])) {
+  process.stdout.write(`${Styles.red.open}File "${process.argv[2]}" does not exist .${Styles.red.close}\n`);
+  process.stdout.write(`${Styles.red.open}Usage: "/botlang <path-to-your-botlang-script>"${Styles.red.close}\n`);
+  process.exit(1);
+}
+
 const options = new Map()
         .set('botname', 'Bot')
-        .set('path', process.argv[process.argv.length - 1])
+        .set('path', process.argv[2])
         .set('prompt', '> ')
         .set('system', 'Sys')
         .set('username', 'You'),

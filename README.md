@@ -20,6 +20,14 @@ Botlang ships with a command line application, which lets you easily explore you
 $ ./bin/cli "<path-to-your-botlang-script>"
 ```
 
+### Usage with docker
+```sh
+# Build the container
+$ docker build -t 'botlang:botlang-js' .
+# Start the ELIZA example
+$ docker run -it 'botlang:botlang-js' npm start
+```
+
 ### Usage in your own application
 ```js
   import * as fs from 'fs';

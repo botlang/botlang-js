@@ -13,6 +13,7 @@ class Lexer {
    * Create a Lexer.
    * @param {Input} input
    * @throws {TypeError}
+   * @return {void}
    */
   constructor(input) {
     if (!(input instanceof Input)) {
@@ -53,6 +54,7 @@ class Lexer {
   /**
    * @private
    * @param {String} char
+   * @return {Boolean}
    */
   static isDigit(char) {
     return /[0-9]/.test(char);
@@ -61,6 +63,7 @@ class Lexer {
   /**
    * @private
    * @param {String} char
+   * @return {Boolean}
    */
   static isIdentifier(char) {
     return Lexer.isIdentifierStart(char) || /[a-zA-Z_]/.test(char);
@@ -69,6 +72,7 @@ class Lexer {
   /**
    * @private
    * @param {String} char
+   * @return {Boolean}
    */
   static isIdentifierStart(char) {
     return /[a-zA-Z]/.test(char);
@@ -77,6 +81,7 @@ class Lexer {
   /**
    * @private
    * @param {String} char
+   * @return {Boolean}
    */
   static isOperation(char) {
     return -1 !== '+-*/%=&|<>!'.indexOf(char);
@@ -85,6 +90,7 @@ class Lexer {
   /**
    * @private
    * @param {String} char
+   * @return {Boolean}
    */
   static isPunctuation(char) {
     return -1 !== ',;(){}[]'.indexOf(char);
@@ -93,6 +99,7 @@ class Lexer {
   /**
    * @private
    * @param {String} char
+   * @return {Boolean}
    */
   static isReservedKeyword(char) {
     return -1 !== reservedKeywords.indexOf(char);
@@ -101,6 +108,7 @@ class Lexer {
   /**
    * @private
    * @param {String} char
+   * @return {Boolean}
    */
   static isString(char) {
     return '"' === char;
@@ -109,14 +117,15 @@ class Lexer {
   /**
    * @private
    * @param {String} char
+   * @return {Boolean}
    */
   static isWhitespace(char) {
     return /\s/.test(char);
   }
 
   /**
-   * Return next token
-   * @return {Token}
+   * Return the next token in from the input stream or `null` if the end of file has been reached
+   * @return {Token|null}
    */
   next() {
     const token = this.currentToken;
@@ -127,6 +136,7 @@ class Lexer {
 
   /**
    * @private
+   * @return {Token|null}
    */
   nextToken() {
     // Ignore whitespace
@@ -175,17 +185,16 @@ class Lexer {
   }
 
   /**
-   * Return the current token.
+   * Return the current token or get the first token if `next` has not been called yet.
    * @return {Token}
    */
   peek() {
-    // Return the current token or get the first token
-    // if `next` has not been called yet.
     return this.currentToken || this.next();
   }
 
   /**
    * @private
+   * @return {String}
    */
   readEscaped(end) {
     let escaped = false,

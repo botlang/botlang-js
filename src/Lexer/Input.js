@@ -52,12 +52,13 @@ class Input {
   }
 
   /**
-   * Return the next value from the stream.
+   * Return the next character from the input stream.
    * @return {String}
    */
   next() {
     const character = this.input.charAt(this.position += 1);
 
+    // Keep track of the current column and line number
     if ('\n' === character) {
       this.column = 0;
       this.line += 1;
@@ -69,7 +70,7 @@ class Input {
   }
 
   /**
-   * Return the value from the current position.
+   * Return the character from the current position without "consuming" it.
    * @return {String}
    */
   peek() {

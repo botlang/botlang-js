@@ -6,7 +6,7 @@
         "url": "https://www.matchilling.com"
     },
     "homepage": "https://botlang.org",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "license": "GPL-3.0",
     "description": "Botlang implementation for JavaScript",
     "keywords": [
@@ -42,13 +42,13 @@
         "nyc": "^10.2.0"
     },
     "scripts": {
-        "compile": "./node_modules/.bin/babel --minified --no-comments --out-dir lib/ src/",
-        "coverage": "./node_modules/.bin/nyc --check-coverage npm test",
-        "dev": "./node_modules/.bin/mocha --compilers js:babel-core/register --recursive --watch test/",
-        "docs:make": "./node_modules/.bin/esdoc -c .esdoc.json",
-        "eslint": "./node_modules/.bin/eslint src/",
+        "compile": "node ./node_modules/babel-cli/bin/babel.js --minified --no-comments --out-dir lib/ src/",
+        "coverage": "node node_modules/nyc/bin/nyc.js --check-coverage npm test",
+        "dev": "node node_modules/mocha/bin/mocha --compilers js:babel-core/register --recursive --watch test/",
+        "docs:make": "node node_modules/esdoc/out/src/ESDocCLI.js -c .esdoc.json",
+        "eslint": "node node_modules/eslint/bin/eslint.js src/",
         "start": "node ./lib/Cli/index.js ./example/eliza.bot",
-        "test": "npm run eslint && ./node_modules/.bin/mocha --compilers js:babel-core/register --recursive test/"
+        "test": "npm run eslint && node node_modules/mocha/bin/mocha --compilers js:babel-core/register --recursive test/"
     },
     "eslintConfig": {
         "extends": [

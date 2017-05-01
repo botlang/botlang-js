@@ -5,6 +5,13 @@
 # Botlang JS
 Botlang Implementation for JavaScript.
 
+## Install
+
+```sh
+# Use the no-bin-links flag if you're running the program on a file system which does not support symlinks (like an usb stick)
+$ npm install --no-bin-links
+```
+
 ## Getting started with the cli
 Botlang ships with a command line application, which lets you easily explore your botlang scripts through in the command line. If you just want to play around with an example run `npm start` which loads the [ELIZA bot](./example/eliza.bot) example into the cli.
 

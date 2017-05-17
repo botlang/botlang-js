@@ -28,6 +28,9 @@ $ docker build -t 'botlang:botlang-js' .
 $ docker run -it 'botlang:botlang-js' npm start
 ```
 
+### Builtin webserver
+Botlang.js provides a lightweight web-server for rapid development. Call `npm run web` to spawn the server or run `docker-compose up` to use the containerized version.
+
 ### Usage in your own application
 ```js
   import * as fs from 'fs';

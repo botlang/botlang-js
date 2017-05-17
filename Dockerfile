@@ -1,17 +1,20 @@
 FROM node:alpine
+MAINTAINER Mathias Schilling <m@matchilling.com>
+
+ENV APP_PATH /opt/botlang
 
 # Install bash
 RUN apk add --update bash && rm -rf /var/cache/apk/*
 
 # Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p $APP_PATH
+WORKDIR $APP_PATH
 
 # Install app dependencies
-COPY package.json /usr/src/app/
+COPY package.json $APP_PATH
 RUN npm install
 
 # Bundle app source
-COPY . /usr/src/app
+COPY . $APP_PATH
 
 CMD ["npm", "run", "test"]

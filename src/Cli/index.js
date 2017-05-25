@@ -10,9 +10,19 @@ if ('undefined' === typeof process.argv[2]) {
   process.stdout.write(`${Styles.red.open}No botscript has been defined.${Styles.red.close}\n`);
   process.stdout.write(`${Styles.red.open}Usage: "/botlang <path-to-your-botlang-script>"${Styles.red.close}\n`);
   process.exit(1);
+} else if (-1 !== ['-h', '--help'].indexOf(process.argv[2])) {
+  process.stdout.write('Usage: botlang <script.bot>\n\n');
+  process.stdout.write('Options:\n');
+  process.stdout.write('  -h, --help    Show this help context\n');
+  process.stdout.write('  -v, --version Print botlang version\n\n');
+  process.stdout.write('Learn more on https://botlang.org\n');
+  process.exit(0);
+} else if (-1 !== ['-v', '--version'].indexOf(process.argv[2])) {
+  process.stdout.write(`v${Botlang.version()}\n`);
+  process.exit(0);
 } else if (!fs.existsSync(process.argv[2])) {
-  process.stdout.write(`${Styles.red.open}File "${process.argv[2]}" does not exist .${Styles.red.close}\n`);
-  process.stdout.write(`${Styles.red.open}Usage: "/botlang <path-to-your-botlang-script>"${Styles.red.close}\n`);
+  process.stdout.write(`${Styles.red.open}File "${process.argv[2]}" does not exist.${Styles.red.close}\n`);
+  process.stdout.write(`${Styles.red.open}Type "botlang --help" to print the help context.${Styles.red.close}\n`);
   process.exit(1);
 }
 

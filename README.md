@@ -1,6 +1,7 @@
 [![Build Status Master](https://api.travis-ci.org/botlang/botlang-js.svg?branch=master)](https://travis-ci.org/botlang/botlang-js)
 [![Source code documentation coverage](https://doc.esdoc.org/github.com/botlang/botlang-js/badge.svg)](https://doc.esdoc.org/github.com/botlang/botlang-js/)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/botlang/botlang-js/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/botlang/botlang-js/?branch=master)
+[![Donate to this project using patreon.com](https://img.shields.io/badge/patreon-donate-yellow.svg)](https://www.patreon.com/matchilling)
 
 # Botlang JS
 Botlang Implementation for JavaScript.
